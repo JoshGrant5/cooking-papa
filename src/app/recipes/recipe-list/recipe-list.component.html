@@ -3,6 +3,7 @@
     <button class="btn btn-success">New Recipe</button>
   </div>
 </div>
+<hr>
 <div class="row">
   <div class="col-xs-12">
     <a href="#" class='list-group-item clearfix' *ngFor='let recipe of recipes'>
@@ -11,9 +12,10 @@
         <p class="list-group-item-text">{{ recipe.description }}</p>
       </div>
       <span class="pull-right">
-        <img src='{{ recipe.imagePath }}' alt="" class='image-responsive' style='max-height: 50px'>
+        <img [src]='recipe.imagePath' alt="{{ recipe.name }}" class='image-responsive' style='max-height: 50px'>
       </span>
     </a>
+    <hr>
     <app-recipe-item></app-recipe-item>
   </div>
 </div>
