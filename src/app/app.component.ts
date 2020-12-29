@@ -10,8 +10,8 @@ export class AppComponent {
 
   loadedFeature = 'recipe';
 
+  // The value passed to onNavigate in will determine whether we render the recipes or shopping list
   onNavigate(feature: string) {
     this.loadedFeature = feature;
-    console.log(feature)
   }
 }
