@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -8,14 +8,20 @@ import { Recipe } from '../recipe.model';
 })
 export class RecipeListComponent implements OnInit {
 
+  @Output() recipeWasSelected = new EventEmitter<Recipe>();
+
   recipes: Recipe[] = [
-    new Recipe('Test Recipe', 'A test recipe', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.simplyrecipes.com%2Frecipes%2Feggs_benedict%2F&psig=AOvVaw2DqwK0Dn9sopqyon9h1TrS&ust=1608931762587000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOiOzoPI5-0CFQAAAAAdAAAAABAD'),
-    new Recipe('Test Recipe', 'A test recipe', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.simplyrecipes.com%2Frecipes%2Feggs_benedict%2F&psig=AOvVaw2DqwK0Dn9sopqyon9h1TrS&ust=1608931762587000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOiOzoPI5-0CFQAAAAAdAAAAABAD')
+    new Recipe('Test Recipe', 'A test recipe', 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=953&q=80'),
+    new Recipe('Test Recipe', 'Another test recipe', 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=934&q=80')
   ];
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onRecipeSelected(recipe: Recipe) {
+    this.recipeWasSelected.emit(recipe);
   }
 
 }
