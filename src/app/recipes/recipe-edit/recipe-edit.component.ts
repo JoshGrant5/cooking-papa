@@ -22,9 +22,13 @@ export class RecipeEditComponent implements OnInit {
          // "+" converts into a number
         this.id = +params['id'];
         this.editMode = params['id'] !== null;
-        this.initForm;
+        this.initForm();
       }
     )
+  }
+
+  onSubmit() {
+    console.log(this.recipeForm);
   }
 
   // Prepopulate the form with selected recipe data for editing

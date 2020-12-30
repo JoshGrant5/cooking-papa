@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <!-- Tell Angular that our overall form should be managed by us, and not by Angular -->
+    <form [formGroup]='recipeForm' (ngSubmit)='onSubmit()'>
       <div class="row">
         <div class="col-xs-12">
           <button type='submit' class='btn btn-success'>Save</button>
@@ -11,7 +12,7 @@
         <div class="col-xs-12">
           <div class="form-group">
             <label for="name">Recipe Name</label>
-            <input type="text" id='name' class='form-control'>
+            <input type="text" id='name' formControlName='name' class='form-control'>
           </div>
         </div>
       </div>
@@ -19,7 +20,7 @@
         <div class="col-xs-12">
           <div class="form-group">
             <label for="imagePath">Image URL</label>
-            <input type="text" id='imagePath' class='form-control'>
+            <input type="text" id='imagePath' formControlName='imagePath' class='form-control'>
           </div>
         </div>
       </div>
@@ -32,7 +33,7 @@
         <div class="col-xs-12">
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea type="text" id='description' class='form-control' rows='6'></textarea>
+            <textarea type="text" id='description' formControlName='description' class='form-control' rows='6'></textarea>
           </div>
         </div>
       </div>
