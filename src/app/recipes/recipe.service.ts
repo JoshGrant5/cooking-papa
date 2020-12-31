@@ -55,6 +55,12 @@ export class RecipeService {
     this.slService.addIngredients(ingredients);
   }
 
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+    console.log('inside setRecipes', this.recipes)
+  }
+
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
     this.recipesChanged.next(this.recipes.slice());
@@ -69,4 +75,5 @@ export class RecipeService {
     this.recipes.splice(index, 1);
     this.recipesChanged.next(this.recipes.slice());
   }
+
 }
