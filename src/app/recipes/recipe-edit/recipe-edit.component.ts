@@ -35,6 +35,15 @@ export class RecipeEditComponent implements OnInit {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
 
+  onAddIngredient() {
+    (<FormArray>this.recipeForm.get('ingredients')).push(
+      new FormGroup({
+        'name': new FormControl(),
+        'amount': new FormControl()
+      })
+    )
+  }
+
   // Prepopulate the form with selected recipe data for editing
   private initForm() {
     let recipeName = '';
