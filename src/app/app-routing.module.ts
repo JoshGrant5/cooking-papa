@@ -5,14 +5,16 @@ import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.com
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { RecipesResolverService } from './recipes/recipes.resolver.service';
 
+// resolvers added to certain routes => will run resolver code before the route is loaded
 const routes: Routes = [
   { path: '', redirectTo: '/recipes', pathMatch: 'full' },
   { path: 'recipes', component: RecipesComponent, children: [
     { path: '', component: RecipeStartComponent },
-    { path: 'new', component: RecipeEditComponent },
+    { path: 'new', component: RecipeEditComponent, resolve: [RecipesResolverService]  },
     { path: ':id/edit', component: RecipeEditComponent },
-    { path: ':id', component: RecipeDetailComponent }
+    { path: ':id', component: RecipeDetailComponent, resolve: [RecipesResolverService] }
   ] },
   { path: 'shopping-list', component: ShoppingListComponent }
 ];
