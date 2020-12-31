@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from '../shared/database.service';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  collapsed= true;
+  collapsed = true;
 
-  constructor() { }
+  constructor(private databaseService: DatabaseService) { }
 
   ngOnInit(): void {
+  }
+
+  onSaveData() {
+    this.databaseService.storeRecipes();
   }
 
 }
