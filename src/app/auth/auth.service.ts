@@ -24,7 +24,7 @@ export class AuthService {
   user = new BehaviorSubject<User>(null);
   // BehaviorSubject also gives subscribers immediate access to previously emitted value, even if they haven't subscribed at the time it was submitted
 
-  // token: string;
+  private tokenExpTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -54,6 +54,8 @@ export class AuthService {
       const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
       if (loadedUser.token) {
         this.user.next(loadedUser);
+        const timeTillAutoLogout = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+        this.autoLogout(timeTillAutoLogout);
       }
     }
   }
@@ -61,12 +63,24 @@ export class AuthService {
   logout() {
     this.user.next(null);
     this.router.navigate(['/authentication']);
+    localStorage.removeItem('userData');
+    if (this.tokenExpTimer) {
+      clearTimeout(this.tokenExpTimer);
+    }
+    this.tokenExpTimer = null;
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
     const expDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, userId, token, expDate);
     this.user.next(user);
+    this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user))
   }
 
