@@ -1,8 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
+import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { AuthService, AuthResponseData } from './auth.service';
 
 @Component({
@@ -10,16 +11,17 @@ import { AuthService, AuthResponseData } from './auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnDestroy {
 
   loginMode: boolean = true;
   loading: boolean = false;
   error: string = null;
+  private closeSubscription: Subscription;
+
+  // Look for the existence of that type in the template => finds first instance of that type in template and store it in alertHost variable
+  @ViewChild(PlaceholderDirective, {static: false}) alertHost: PlaceholderDirective;
 
   constructor(private authService: AuthService, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) { }
-
-  ngOnInit() {
-  }
 
   onSwitchMode() {
     this.loginMode = !this.loginMode;
@@ -60,7 +62,24 @@ export class AuthComponent implements OnInit {
   private showError(message: string) {
     // Create a component factory of type AlertComponent
     const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+    const hostViewContainerRef = this.alertHost.viewContainerRef;
+    hostViewContainerRef.clear(); // Clear all angular components that have been rendered in that place before declaring something new
 
+    // use the componentFactory to create a new component in the viewContainerRef place in the DOM
+    const componentRef = hostViewContainerRef.createComponent(alertCmpFactory);
+    // Instance property gives access to complete instance of this component (ie. properties, etc.)
+    componentRef.instance.message = message;
+    this.closeSubscription = componentRef.instance.close.subscribe(() => {
+      // Clear the ViewContainerRef from the DOM once again
+      this.closeSubscription.unsubscribe();
+      hostViewContainerRef.clear();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.closeSubscription) {
+      this.closeSubscription.unsubscribe();
+    }
   }
 
 }
