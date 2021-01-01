@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map, tap, take, exhaustMap } from 'rxjs/operators';
 
 import { Recipe } from '../recipes/recipe.model';
@@ -33,25 +33,25 @@ export class DatabaseService {
       take(1),
       exhaustMap(user => {
         return this.http.get<Recipe[]>(
-          'https://cooking-papa-default-rtdb.firebaseio.com/recipes.json',
-          {
-            params: new HttpParams().set('auth', user.token)
-          }
-        );
-      }),
-      // first map is rxjs operator, second map is js method
-      map(recipes => {
-        return recipes.map(recipe => {
-          return {
-            ...recipe,
-            ingredients: recipe.ingredients ? recipe.ingredients : []
-          };
-        });
-      }),
-      // tap allows us to execute code in place without altering the data funneled through the observable
-      tap(recipes => {
-        this.recipeService.setRecipes(recipes);
+          'https://cooking-papa-default-rtdb.firebaseio.com/recipes.json'
+        )
+        .pipe(
+          // first map is rxjs operator, second map is js method
+          map(recipes => {
+            return recipes.map(recipe => {
+              return {
+                ...recipe,
+                ingredients: recipe.ingredients ? recipe.ingredients : []
+              };
+            });
+          }),
+          // tap allows us to execute code in place without altering the data funneled through the observable
+          tap(recipes => {
+            this.recipeService.setRecipes(recipes);
+          })
+        )
       })
     );
   }
+
 }
