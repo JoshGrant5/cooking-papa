@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { firebaseAPIKey } from "firebase";
-import { Subject, Subscription, throwError } from "rxjs";
+import { BehaviorSubject, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { User } from "./user.model";
 
@@ -19,7 +19,11 @@ export interface AuthResponseData {
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
-  user = new Subject<User>();
+  // Regular Subject - to which we can subscribe and get info whenever new data is emitted
+  user = new BehaviorSubject<User>(null);
+  // BehaviorSubject also gives subscribers immediate access to previously emitted value, even if they haven't subscribed at the time it was submitted
+
+  // token: string;
 
   constructor(private http: HttpClient) {}
 
