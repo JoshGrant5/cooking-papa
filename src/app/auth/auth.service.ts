@@ -41,7 +41,6 @@ export class AuthService {
     const expDate = new Date(new Date().getTime() + expiresIn * 1000);
       const user = new User(email, userId, token, expDate);
       this.user.next(user);
-      console.log('handling authentication', user)
   }
 
   private handleError(errorRes: HttpErrorResponse) {
