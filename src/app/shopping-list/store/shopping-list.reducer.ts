@@ -1,4 +1,3 @@
-import { Action } from "@ngrx/store";
 import { Ingredient } from "src/app/shared/ingredient.model";
 import * as ShoppingListActions from "./shopping-list.actions";
 
@@ -6,10 +5,6 @@ export interface ShoppingListState {
   ingredients: Ingredient[];
   editedIngredient: Ingredient;
   editedIndex: number;
-}
-
-export interface AppState {
-  shoppingList: ShoppingListState;
 }
 
 const initialState: ShoppingListState = {

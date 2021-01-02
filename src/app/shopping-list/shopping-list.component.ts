@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Ingredient } from './../shared/ingredient.model';
-import * as fromShoppingList from './store/shopping-list.reducer';
-import * as ShoppingListActions from './store/shopping-list.actions'
+import * as ShoppingListActions from './store/shopping-list.actions';
+import * as fromApp from '../store/app.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -19,7 +19,7 @@ export class ShoppingListComponent implements OnInit {
 
   constructor(
     // Must declare the type of our store (the reducer and its return value). In this case, our store is of type our application state as seen inside the shopping list reducer
-    private store: Store<fromShoppingList.AppState>
+    private store: Store<fromApp.AppState>
     ) {}
 
   ngOnInit() {
