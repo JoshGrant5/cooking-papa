@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 // resolvers added to certain routes => will run resolver code before the route is loaded
 const routes: Routes = [
@@ -20,7 +20,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  // Configure root router to preload all the modules as soon as possible
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
