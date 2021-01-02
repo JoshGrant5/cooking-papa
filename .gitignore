@@ -45,4 +45,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Production Files
 /src/environments
+/.firebase
+/.github
+/firebase.json
+/.firebaserc
