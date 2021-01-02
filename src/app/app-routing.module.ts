@@ -5,8 +5,7 @@ import { AuthComponent } from './auth/auth.component';
 
 // resolvers added to certain routes => will run resolver code before the route is loaded
 const routes: Routes = [
-  { path: '', redirectTo: '/recipes', pathMatch: 'full' },
-  { path: 'authentication', component: AuthComponent}
+  { path: '', redirectTo: '/recipes', pathMatch: 'full' }
 ];
 
 @NgModule({
