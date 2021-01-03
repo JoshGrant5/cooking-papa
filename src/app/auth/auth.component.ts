@@ -39,29 +39,12 @@ export class AuthComponent implements OnInit {
   onSubmit(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    // Create observable that we can subscribe to so we do not have to have the same code in the if/else block below
-    let authObservable: Observable<AuthResponseData>;
-    this.loading = true;
 
     if (this.loginMode) {
       this.store.dispatch(new AuthActions.LoginStart({email, password}));
     } else {
-      authObservable = this.authService.signup(email, password);
+      this.store.dispatch(new AuthActions.SignupStart({email, password}));
     }
-
-
-
-    // authObservable.subscribe(response => {
-    //   console.log(response);
-    //   this.loading = false;
-    //   this.router.navigate(['/recipes']);
-    // },
-    //   errorMessage => {
-    //     this.error = errorMessage;
-    //     this.loading = false;
-    //   }
-    // )
-
     form.reset();
   }
 
