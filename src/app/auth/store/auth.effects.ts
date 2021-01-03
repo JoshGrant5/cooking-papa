@@ -5,6 +5,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth.service';
 import { User } from '../user.model';
 
 import * as AuthActions from './auth.actions';
@@ -53,7 +54,12 @@ const handleError = (errorRes: any) => {
 export class AuthEffects {
 
   // Actions effects are an obvservable that differ from the observables we use in the reducers => we do not change any state, but execute any other code (side effects) when the reducer actions are done
-  constructor(private actions$: Actions, private http: HttpClient, private router: Router) {}
+  constructor(
+    private actions$: Actions,
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   @Effect() // declare as an Effect
   authSignup = this.actions$.pipe(ofType(AuthActions.SIGNUP_START), switchMap((signupAction: AuthActions.SignupStart) => {
@@ -63,6 +69,9 @@ export class AuthEffects {
       returnSecureToken: true
     })
     .pipe(
+      tap(resData => {
+        this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+      }),
       map(resData => {
         return handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
       }),
@@ -84,6 +93,9 @@ export class AuthEffects {
       })
       // Call pipe on inner observable (not on overall chain). With catchError, we must return a non-error observable so that our overall stream does not die => since switchMap returns a result of the inner observable stream as a new observable to the outer chain, returning a non-error observable in catchError is crucial so that we still yeild a non-error observable to be picked up by switchMap and returned to the overall stream
       .pipe(
+        tap(resData => {
+          this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+        }),
         map(resData => {
           return handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
         }),
@@ -96,7 +108,7 @@ export class AuthEffects {
 
   // Let NgRx know that this effect will not yield a dispatchable action
   @Effect({dispatch: false})
-  authRedirect = this.actions$.pipe(ofType(AuthActions.AUTHENTICATED, AuthActions.LOGOUT), tap(() => {
+  authRedirect = this.actions$.pipe(ofType(AuthActions.AUTHENTICATED), tap(() => {
     this.router.navigate(['/']);
   }));
 
@@ -112,14 +124,14 @@ export class AuthEffects {
     if (userData) {
       const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
       if (loadedUser.token) {
+        const timeTillAutoLogout = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+        this.authService.setLogoutTimer(timeTillAutoLogout);
         return new AuthActions.Authenticated({
           email: loadedUser.email,
           userId: loadedUser.id,
           token: loadedUser.token,
           expirationDate: new Date(userData._tokenExpirationDate)
         });
-        // const timeTillAutoLogout = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
-        // this.autoLogout(timeTillAutoLogout);
       }
       return { type: 'No Effect' };
     } else {
@@ -129,7 +141,9 @@ export class AuthEffects {
 
   @Effect({dispatch: false})
   authLogout = this.actions$.pipe(ofType(AuthActions.LOGOUT), tap(() => {
+    this.authService.clearLogoutTimer();
     localStorage.removeItem('userData');
+    this.router.navigate(['/authentication']);
   }));
 
 }
