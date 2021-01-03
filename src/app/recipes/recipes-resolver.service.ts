@@ -11,7 +11,8 @@ import { Actions, ofType } from '@ngrx/effects';
 
 import * as fromApp from '../store/app.reducer';
 import * as RecipesActions from '../recipes/store/recipe.actions';
-import { take } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesResolverService implements Resolve<Recipe[]> {
@@ -19,9 +20,21 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
 
   // Resolver loads the data before the page is loaded
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    this.store.dispatch(new RecipesActions.FetchRecipes());
-    // We listen to SET_RECIPES, because if that is called, we know we need to resolve our recipes
-    return this.actions$.pipe(ofType(RecipesActions.SET_RECIPES), take(1));
+    // Select our recipes from the store
+    return this.store.select('recipes').pipe(take(1), map(recipesState => {
+      // This will be either an empty array or a filled array
+      return recipesState.recipes;
+    }),
+    switchMap(recipes => {
+      if (recipes.length === 0) {
+        this.store.dispatch(new RecipesActions.FetchRecipes());
+        // We listen to SET_RECIPES, because if that is called, we know we need to resolve our recipes
+        return this.actions$.pipe(ofType(RecipesActions.SET_RECIPES), take(1));
+      } else {
+        // Our recipes length is greater than 0, so we return a new observable of just our current recipes
+        return of(recipes);
+      }
+    }));
   }
 }
 
