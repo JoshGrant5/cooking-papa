@@ -15,6 +15,8 @@ export class AuthEffects {
   // Actions effects are an obvservable that differ from the observables we use in the reducers => we do not change any state, but execute any other code (side effects) when the reducer actions are done
   constructor(private actions$: Actions, private http: HttpClient, private router: Router) {}
 
+  authSignup = this.actions$.pipe(ofType(AuthActions.SIGNUP_START));
+
   // ofType to specify to only continue in this observable chain if the action that we are reacting to is of type LOGIN_START (could add multiple here, but only specified the one)
   @Effect() // declare authLogin as an Effect
   authLogin = this.actions$.pipe(ofType(AuthActions.LOGIN_START),
@@ -30,13 +32,13 @@ export class AuthEffects {
         map(resData => {
           // At this stage we have a successfully logged in user, so we want to return an observable that holds our login action
           const expirationDate = new Date(new Date().getTime() + +resData.expiresIn * 1000);
-          return new AuthActions.Login({email: resData.email, userId: resData.localId, token: resData.idToken, expirationDate});
+          return new AuthActions.Authenticated({email: resData.email, userId: resData.localId, token: resData.idToken, expirationDate});
         }),
         catchError(errorRes => {
           let errorMessage = 'An unkown error occured';
           if (!errorRes.error || !errorRes.error.error) {
              // of is utility funciton for creating a new observable
-            return of(new AuthActions.LoginFail(errorMessage));
+            return of(new AuthActions.AuthenticateFail(errorMessage));
           }
           switch (errorRes.error.error.message) {
             case 'EMAIL_EXISTS':
@@ -50,7 +52,7 @@ export class AuthEffects {
               break;
           }
           // Return a new action (return a new observable)
-          return of(new AuthActions.LoginFail(errorMessage))
+          return of(new AuthActions.AuthenticateFail(errorMessage))
         })
       );
     })
@@ -58,7 +60,7 @@ export class AuthEffects {
 
   // Let NgRx know that this effect will not yield a dispatchable action
   @Effect({dispatch: false})
-  authSuccess = this.actions$.pipe(ofType(AuthActions.LOGIN), tap(() => {
+  authSuccess = this.actions$.pipe(ofType(AuthActions.AUTHENTICATED), tap(() => {
     this.router.navigate(['/']);
   }));
 
