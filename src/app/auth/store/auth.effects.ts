@@ -5,6 +5,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { User } from '../user.model';
 
 import * as AuthActions from './auth.actions';
 
@@ -22,6 +23,8 @@ export interface AuthResponseData {
  // At this stage we have a successfully logged in user, so we want to return an observable that holds our login action
 const handleAuthentication = (email: string, userId: string, token: string, expiresIn: number) => {
   const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+  const user = new User(email, userId, token, expirationDate);
+  localStorage.setItem('userData', JSON.stringify(user));
   return new AuthActions.Authenticated({email, userId, token, expirationDate});
 }
 
@@ -93,8 +96,40 @@ export class AuthEffects {
 
   // Let NgRx know that this effect will not yield a dispatchable action
   @Effect({dispatch: false})
-  authSuccess = this.actions$.pipe(ofType(AuthActions.AUTHENTICATED), tap(() => {
+  authRedirect = this.actions$.pipe(ofType(AuthActions.AUTHENTICATED, AuthActions.LOGOUT), tap(() => {
     this.router.navigate(['/']);
+  }));
+
+  @Effect()
+  autoLogin = this.actions$.pipe(ofType(AuthActions.AUTO_LOGIN), map(() => {
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(localStorage.getItem('userData'));
+
+    if (userData) {
+      const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+      if (loadedUser.token) {
+        return new AuthActions.Authenticated({
+          email: loadedUser.email,
+          userId: loadedUser.id,
+          token: loadedUser.token,
+          expirationDate: new Date(userData._tokenExpirationDate)
+        });
+        // const timeTillAutoLogout = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+        // this.autoLogout(timeTillAutoLogout);
+      }
+      return { type: 'No Effect' };
+    } else {
+      return { type: 'No Effect' };
+    }
+  }));
+
+  @Effect({dispatch: false})
+  authLogout = this.actions$.pipe(ofType(AuthActions.LOGOUT), tap(() => {
+    localStorage.removeItem('userData');
   }));
 
 }
