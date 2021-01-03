@@ -27,6 +27,7 @@
     "@ngrx/effects": "^10.1.2",
     "@ngrx/store": "^10.1.2",
     "@nguniversal/express-engine": "^11.0.1",
+    "@nguniversal/module-map-ngfactory-loader": "^8.2.6",
     "bootstrap": "^3.4.1",
     "express": "^4.15.2",
     "rxjs": "~6.6.0",
