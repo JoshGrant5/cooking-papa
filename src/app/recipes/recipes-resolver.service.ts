@@ -6,25 +6,22 @@ import {
 } from '@angular/router';
 
 import { Recipe } from './recipe.model';
-import { DatabaseService } from '../shared/database.service';
-import { RecipeService } from './recipe.service';
+import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+
+import * as fromApp from '../store/app.reducer';
+import * as RecipesActions from '../recipes/store/recipe.actions';
+import { take } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesResolverService implements Resolve<Recipe[]> {
-  constructor(
-    private databaseService: DatabaseService,
-    private recipesService: RecipeService
-  ) {}
+  constructor(private store: Store<fromApp.AppState>, private actions$: Actions) {}
 
   // Resolver loads the data before the page is loaded
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const recipes = this.recipesService.getRecipes();
-
-    if (recipes.length === 0) {
-      return this.databaseService.fetchRecipes();
-    } else {
-      return recipes;
-    }
+    this.store.dispatch(new RecipesActions.FetchRecipes());
+    // We listen to SET_RECIPES, because if that is called, we know we need to resolve our recipes
+    return this.actions$.pipe(ofType(RecipesActions.SET_RECIPES), take(1));
   }
 }
 
