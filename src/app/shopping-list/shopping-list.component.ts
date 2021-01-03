@@ -29,10 +29,6 @@ export class ShoppingListComponent implements OnInit {
   }
 
   onEditItem(index: number) {
-    this.store.dispatch(new ShoppingListActions.StartEdit(index));
+    this.store.dispatch(ShoppingListActions.startEdit({index}));
   }
-
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
 }

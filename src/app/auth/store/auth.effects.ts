@@ -1,14 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth.service';
-import { User } from '../user.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 import * as AuthActions from './auth.actions';
+import { User } from '../user.model';
+import { AuthService } from '../auth.service';
 
 // Define what our response object we get back from Firebase will look like
 export interface AuthResponseData {
@@ -26,14 +26,14 @@ const handleAuthentication = (email: string, userId: string, token: string, expi
   const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
   const user = new User(email, userId, token, expirationDate);
   localStorage.setItem('userData', JSON.stringify(user));
-  return new AuthActions.Authenticated({email, userId, token, expirationDate, redirect: true});
+  return AuthActions.authenticated({email, userId, token, expirationDate, redirect: true});
 }
 
 const handleError = (errorRes: any) => {
   let errorMessage = 'An unkown error occured';
   if (!errorRes.error || !errorRes.error.error) {
     // of is utility funciton for creating a new observable
-    return of(new AuthActions.AuthenticateFail(errorMessage));
+    return of(AuthActions.authenticateFail({errorMessage}));
   }
   switch (errorRes.error.error.message) {
     case 'EMAIL_EXISTS':
@@ -47,7 +47,7 @@ const handleError = (errorRes: any) => {
       break;
   }
   // Return a new action (return a new observable)
-  return of(new AuthActions.AuthenticateFail(errorMessage))
+  return of(AuthActions.authenticateFail({errorMessage}));
 }
 
 @Injectable()
@@ -61,11 +61,11 @@ export class AuthEffects {
     private authService: AuthService
   ) {}
 
-  @Effect() // declare as an Effect
-  authSignup = this.actions$.pipe(ofType(AuthActions.SIGNUP_START), switchMap((signupAction: AuthActions.SignupStart) => {
+  authSignup$ = createEffect(() =>
+    this.actions$.pipe(ofType(AuthActions.signupStart), switchMap(action => {
     return this.http.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`, {
-      email: signupAction.payload.email,
-      password: signupAction.payload.password,
+      email: action.email,
+      password: action.password,
       returnSecureToken: true
     })
     .pipe(
@@ -79,16 +79,16 @@ export class AuthEffects {
         return handleError(errorRes);
       })
     );
-  }));
+  })));
 
   // ofType to specify to only continue in this observable chain if the action that we are reacting to is of type LOGIN_START (could add multiple here, but only specified the one)
-  @Effect() // declare as an Effect
-  authLogin = this.actions$.pipe(ofType(AuthActions.LOGIN_START),
-  // use switchMap to create a new observable which takes another observable's data (AuthActions.LoginStart)
-    switchMap((authData: AuthActions.LoginStart) => {
+  authLogin$ = createEffect(() =>
+    this.actions$.pipe(ofType(AuthActions.loginStart),
+    // use switchMap to create a new observable which takes another observable's data (AuthActions.LoginStart)
+    switchMap(action => {
       return this.http.post<AuthResponseData>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`, {
-        email: authData.payload.email,
-        password: authData.payload.password,
+        email: action.email,
+        password: action.password,
         returnSecureToken: true
       })
       // Call pipe on inner observable (not on overall chain). With catchError, we must return a non-error observable so that our overall stream does not die => since switchMap returns a result of the inner observable stream as a new observable to the outer chain, returning a non-error observable in catchError is crucial so that we still yeild a non-error observable to be picked up by switchMap and returned to the overall stream
@@ -104,18 +104,16 @@ export class AuthEffects {
         })
       );
     })
+  ));
+
+  authRedirect$ = createEffect(() =>
+    this.actions$.pipe(ofType(AuthActions.authenticated), tap(action =>
+      action.redirect && this.router.navigate(['/']))
+    ), { dispatch: false }
   );
 
-  // Let NgRx know that this effect will not yield a dispatchable action
-  @Effect({dispatch: false})
-  authRedirect = this.actions$.pipe(ofType(AuthActions.AUTHENTICATED), tap((authSuccessAction: AuthActions.Authenticated) => {
-    if (authSuccessAction.payload.redirect) {
-      this.router.navigate(['/']);
-    }
-  }));
-
-  @Effect()
-  autoLogin = this.actions$.pipe(ofType(AuthActions.AUTO_LOGIN), map(() => {
+  autoLogin$ = createEffect(() =>
+    this.actions$.pipe(ofType(AuthActions.autoLogin), map(() => {
     const userData: {
       email: string;
       id: string;
@@ -128,7 +126,7 @@ export class AuthEffects {
       if (loadedUser.token) {
         const timeTillAutoLogout = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
         this.authService.setLogoutTimer(timeTillAutoLogout);
-        return new AuthActions.Authenticated({
+        return AuthActions.authenticated({
           email: loadedUser.email,
           userId: loadedUser.id,
           token: loadedUser.token,
@@ -140,13 +138,13 @@ export class AuthEffects {
     } else {
       return { type: 'No Effect' };
     }
-  }));
+  })));
 
-  @Effect({dispatch: false})
-  authLogout = this.actions$.pipe(ofType(AuthActions.LOGOUT), tap(() => {
+  authLogout$ = createEffect(() =>
+    this.actions$.pipe(ofType(AuthActions.logout), tap(() => {
     this.authService.clearLogoutTimer();
     localStorage.removeItem('userData');
     this.router.navigate(['/authentication']);
-  }));
+  })));
 
 }

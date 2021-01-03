@@ -15,7 +15,7 @@ import { map, switchMap, take } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class RecipesResolverService implements Resolve<Recipe[]> {
+export class RecipesResolverService implements Resolve<{recipes: Recipe[]}> {
   constructor(private store: Store<fromApp.AppState>, private actions$: Actions) {}
 
   // Resolver loads the data before the page is loaded
@@ -27,12 +27,12 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
     }),
     switchMap(recipes => {
       if (recipes.length === 0) {
-        this.store.dispatch(new RecipesActions.FetchRecipes());
+        this.store.dispatch(RecipesActions.fetchRecipes());
         // We listen to SET_RECIPES, because if that is called, we know we need to resolve our recipes
-        return this.actions$.pipe(ofType(RecipesActions.SET_RECIPES), take(1));
+        return this.actions$.pipe(ofType(RecipesActions.setRecipes), take(1));
       } else {
         // Our recipes length is greater than 0, so we return a new observable of just our current recipes
-        return of(recipes);
+        return of({recipes});
       }
     }));
   }
