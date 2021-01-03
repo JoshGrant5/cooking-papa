@@ -17,11 +17,13 @@ const routes: Routes = [
       { path: 'new', component: RecipeEditComponent },
       {
         path: ':id',
-        component: RecipeDetailComponent
+        component: RecipeDetailComponent,
+        resolve: [RecipesResolverService]
       },
       {
         path: ':id/edit',
-        component: RecipeEditComponent
+        component: RecipeEditComponent,
+        resolve: [RecipesResolverService]
       }
     ]
   },

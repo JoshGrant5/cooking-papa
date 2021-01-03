@@ -19,7 +19,8 @@ export class Authenticated implements Action {
     email: string,
     userId: string,
     token: string,
-    expirationDate: Date
+    expirationDate: Date,
+    redirect: boolean
   }) {}
 }
 

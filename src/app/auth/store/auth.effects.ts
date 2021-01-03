@@ -26,7 +26,7 @@ const handleAuthentication = (email: string, userId: string, token: string, expi
   const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
   const user = new User(email, userId, token, expirationDate);
   localStorage.setItem('userData', JSON.stringify(user));
-  return new AuthActions.Authenticated({email, userId, token, expirationDate});
+  return new AuthActions.Authenticated({email, userId, token, expirationDate, redirect: true});
 }
 
 const handleError = (errorRes: any) => {
@@ -108,8 +108,10 @@ export class AuthEffects {
 
   // Let NgRx know that this effect will not yield a dispatchable action
   @Effect({dispatch: false})
-  authRedirect = this.actions$.pipe(ofType(AuthActions.AUTHENTICATED), tap(() => {
-    this.router.navigate(['/']);
+  authRedirect = this.actions$.pipe(ofType(AuthActions.AUTHENTICATED), tap((authSuccessAction: AuthActions.Authenticated) => {
+    if (authSuccessAction.payload.redirect) {
+      this.router.navigate(['/']);
+    }
   }));
 
   @Effect()
@@ -130,7 +132,8 @@ export class AuthEffects {
           email: loadedUser.email,
           userId: loadedUser.id,
           token: loadedUser.token,
-          expirationDate: new Date(userData._tokenExpirationDate)
+          expirationDate: new Date(userData._tokenExpirationDate),
+          redirect: false
         });
       }
       return { type: 'No Effect' };
