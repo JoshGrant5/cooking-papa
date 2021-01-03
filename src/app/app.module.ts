@@ -18,7 +18,7 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     HeaderComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     AppRoutingModule,
     // use forRoot to specify which reducers we will be using

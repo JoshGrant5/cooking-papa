@@ -23,8 +23,9 @@ const routes: Routes = [
   // Configure root router to preload all the modules as soon as possible
   imports: [
     RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules
-    })
+    preloadingStrategy: PreloadAllModules,
+    initialNavigation: 'enabled'
+})
   ],
   exports: [RouterModule]
 })
