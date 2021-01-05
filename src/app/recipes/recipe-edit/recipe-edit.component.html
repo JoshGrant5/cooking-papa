@@ -1,19 +1,8 @@
 <div class="row">
   <div class="col-xs-12">
+    <h1>My New Recipe</h1>
     <!-- Tell Angular that our overall form should be managed by us, and not by Angular -->
     <form [formGroup]='recipeForm' (ngSubmit)='onSubmit()'>
-      <div class="row">
-        <div class="col-xs-12">
-          <button
-            type='submit'
-            class='btn btn-success'
-            [disabled]='!recipeForm.valid'
-          >
-            Save
-          </button>
-          <button type='button' class='btn btn-danger' (click)='onCancel()'>Cancel</button>
-        </div>
-      </div>
       <div class="row">
         <div class="col-xs-12">
           <div class="form-group">
@@ -46,23 +35,37 @@
       </div>
       <div class="row">
         <div class="col-xs-12" formArrayName='ingredients'>
-          <div class="row" *ngFor="let ingredientCtrl of controls; let i = index" [formGroupName]='i' style='margin-top: 15px'>
+          <div class="row ingredient-container" *ngFor="let ingredientCtrl of controls; let i = index" [formGroupName]='i'>
             <div class="col-xs-8">
-              <input type="text" class='form-control' formControlName='name'>
+              <label for="item">Item</label>
+              <input id='item' type="text" class='form-control' formControlName='name'>
             </div>
             <div class="col-xs-2">
-              <input type="number" class='form-control' formControlName='amount'>
+              <label for="quantity">Quantity</label>
+              <input id='quantity' type="number" class='form-control' formControlName='amount'>
             </div>
-            <div class="col-xs-2">
-              <button type='button' class='btn btn-danger' (click)='onDeleteIngredient(i)'>X</button>
+            <div class="col-xs-2 delete">
+              <button type='button' class='bttn-simple bttn-sm bttn-primary' (click)='onDeleteIngredient(i)'>X</button>
             </div>
           </div>
-          <hr>
           <div class="row">
             <div class="col-xs-12">
-              <button type='button' class="btn btn-success" (click)='onAddIngredient()'>Add Ingredient</button>
+              <button type='button' class="bttn-simple bttn-md bttn-warning" (click)='onAddIngredient()'>Add Ingredient</button>
             </div>
           </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-12 bttn-container">
+          <button
+            type='submit'
+            class='bttn-simple bttn-md bttn-danger'
+            [disabled]='!recipeForm.valid'
+          >
+            Save
+          </button>
+          <button type='button' class='bttn-simple bttn-md bttn-default' (click)='onCancel()'>Cancel</button>
         </div>
       </div>
     </form>

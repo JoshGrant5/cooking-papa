@@ -1,3 +1,61 @@
+h1 {
+  font-family: 'Caveat', sans-serif;
+  text-align: center;
+}
+
+form {
+  width: 40vw;
+}
+
 input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
   border: 1px solid red;
 }
+
+.bttn-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 5vh;
+}
+
+.bttn-danger {
+  width: 40%;
+}
+
+.bttn-default {
+  background: white;
+  color: #ff5964;
+  outline: auto;
+  width: 40%;
+}
+
+.bttn-primary {
+  background: white;
+  color: #ff5964;
+  outline: auto;
+}
+
+.bttn-warning {
+  background-color: lightpink;
+  color: rgb(29, 13, 13);
+  width: 100%;
+}
+
+.ingredient-container {
+  margin-bottom: 25px;
+}
+
+.delete {
+  margin-top: 25px;
+}
+
+@media only screen and (max-width: 1000px) {
+  form {
+    width: 60vw;
+  }
+}
+@media only screen and (max-width: 500px) {
+  form {
+    width: 70vw;
+  }
+}
+
