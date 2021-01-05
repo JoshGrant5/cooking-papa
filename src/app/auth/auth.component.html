@@ -4,6 +4,7 @@
     <div class='loading' *ngIf='loading'>
       <app-spinner></app-spinner>
     </div>
+    <h1>Cooking Papa</h1>
     <form #authForm='ngForm' (ngSubmit)='onSubmit(authForm)' *ngIf='!loading'>
       <div class="form-group">
         <label for="email">Email</label>
@@ -18,5 +19,8 @@
         <button class="btn btn-primary" type='button' (click)='onSwitchMode()'>{{ loginMode ? 'Create an Account' : 'Back to Login' }}</button>
       </div>
     </form>
+    <div class="icon">
+      <img src="../../assets/chef.png" alt="chef">
+    </div>
   </div>
 </div>

@@ -2,8 +2,13 @@
   text-align: center;
 }
 
+h1 {
+  font-family: 'Caveat', sans-serif;
+  text-align: center;
+}
+
 form {
-  margin-top: 30%;
+  margin-top: 10%;
   border: 1px solid grey;
   border-radius: 25px;
   padding: 25px;
@@ -18,4 +23,13 @@ form {
 
 .btn {
   width: 35%
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+img {
+  width: 50%;
 }
