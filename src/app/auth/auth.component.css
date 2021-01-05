@@ -1,0 +1,21 @@
+.loading {
+  text-align: center;
+}
+
+form {
+  margin-top: 30%;
+  border: 1px solid grey;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 2px 2px 2px 2px lightgray;
+}
+
+.form-bttns {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.btn {
+  width: 35%
+}
