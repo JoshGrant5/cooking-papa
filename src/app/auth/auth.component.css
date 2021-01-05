@@ -22,10 +22,6 @@ form {
   justify-content: space-evenly;
 }
 
-.bttn-simple {
-  /* width: 10vw; */
-}
-
 .bttn-simple.bttn-default {
   background: white;
   color: #ff5964;
