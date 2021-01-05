@@ -41,7 +41,7 @@ const _shoppingListReducer = createReducer(
     ShoppingListActions.updateIngredient,
     (state, action) => ({
       ...state,
-      editIndex: -1,
+      editedIndex: -1,
       ingredients: state.ingredients.map(
         (ingredient, index) => index === state.editedIndex ? { ...action.ingredient } : ingredient
       )
@@ -52,7 +52,7 @@ const _shoppingListReducer = createReducer(
     ShoppingListActions.deleteIngredient,
     (state) => ({
       ...state,
-      editIndex: -1,
+      editedIndex: -1,
       ingredients: state.ingredients.filter(
         (_, index) => index !== state.editedIndex
       )
@@ -62,7 +62,7 @@ const _shoppingListReducer = createReducer(
   on(
     ShoppingListActions.startEdit,
     (state, action) => ({
-      ...state, editIndex:
+      ...state, editedIndex:
       action.index
     })
   ),
@@ -70,7 +70,7 @@ const _shoppingListReducer = createReducer(
   on(
     ShoppingListActions.stopEdit,
     (state) => ({
-      ...state, editIndex: -1
+      ...state, editedIndex: -1
     })
   )
 

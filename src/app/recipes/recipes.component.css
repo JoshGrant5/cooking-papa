@@ -1,0 +1,8 @@
+.recipe-body {
+  margin-top: 5vh;
+}
+
+.detail {
+  display: flex;
+  justify-content: center;
+}

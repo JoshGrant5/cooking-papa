@@ -1,0 +1,9 @@
+.navbar-brand {
+  font-family: 'Caveat', cursive;
+  font-size: 2em;
+  color: #f50f0f;
+}
+
+.navbar-default .navbar-brand {
+  color: #f50f0f;
+}

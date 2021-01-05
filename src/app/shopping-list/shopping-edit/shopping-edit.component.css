@@ -1,0 +1,30 @@
+.edit-body {
+  margin-bottom: 5vh;
+}
+
+.bttn-simple {
+  margin-left: 15px;
+  width: 85px;
+}
+
+.bttn-default {
+  background: white;
+  color: #ff5964;
+  outline: auto;
+}
+
+.bttn-warning {
+  background-color: lightpink;
+  color: rgb(29, 13, 13);
+}
+
+@media only screen and (max-width: 500px) {
+  .btn-container {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .btn {
+    width: 75px;
+    margin-left: 0;
+  }
+}

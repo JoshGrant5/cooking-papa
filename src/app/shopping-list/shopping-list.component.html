@@ -1,6 +1,7 @@
-<div class="row">
+<div class="row" style='margin-top: 5vh; display: flex; justify-content: center;'>
   <div class="col-xs-10">
     <app-shopping-edit></app-shopping-edit>
+    <h1 style="font-family: 'Caveat', cursive">My Shopping List</h1>
     <hr>
     <ul class="list-group">
       <!-- Use async pipe on ingredients to subscribe to ingredients and resolve an array -->
@@ -8,6 +9,7 @@
         class='list-group-item'
         *ngFor='let ingredient of (ingredients | async).ingredients; let i = index'
         (click)='onEditItem(i)'
+        style="cursor: pointer"
       >
         {{ ingredient.name }} ({{ ingredient.amount }})
       </a>

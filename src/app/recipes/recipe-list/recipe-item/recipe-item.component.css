@@ -1,0 +1,38 @@
+.recipe-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.pull-left  {
+  padding: 15px;
+}
+
+h3 {
+  font-family: 'Caveat', cursive;
+}
+
+img {
+  margin-left: 20px;
+  max-height: 150px;
+  width:  150px;
+  object-fit: cover;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+  background-color: lightpink;
+  border-color: lightpink;
+}
+
+list-group-item.active .list-group-item-text, .list-group-item.active:focus .list-group-item-text, .list-group-item.active:hover .list-group-item-text {
+  color: black;
+}
+
+.list-group-item.active .list-group-item-heading, .list-group-item.active .list-group-item-heading>.small, .list-group-item.active .list-group-item-heading>small, .list-group-item.active:focus .list-group-item-heading, .list-group-item.active:focus .list-group-item-heading>.small, .list-group-item.active:focus .list-group-item-heading>small, .list-group-item.active:hover .list-group-item-heading, .list-group-item.active:hover .list-group-item-heading>.small, .list-group-item.active:hover .list-group-item-heading>small {
+  color: black;
+}
+
+.list-group-item.active .list-group-item-text, .list-group-item.active:focus .list-group-item-text, .list-group-item.active:hover .list-group-item-text {
+  color: black;
+}

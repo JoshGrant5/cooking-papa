@@ -1,36 +1,36 @@
-<div class="row">
-  <div class="col-xs-12">
-    <img [src]='recipe.imagePath' alt="{{ recipe.name }}" class='img-responsive' style='height: 300px'>
+<div class='col-xs-12'>
+  <div class="col-xs-10" class='img-container'>
+    <img [src]='recipe.imagePath' alt="{{ recipe.name }}" class='img-responsive'>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
+<div class="row detail-container">
+  <div class="col-xs-12 detail-body">
     <h1>{{ recipe.name }}</h1>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
+<div class="row no-margin">
+  <div class="col-xs-10 detail">
+    <div class="col-xs-10">
+      {{ recipe.description }}
+    </div>
     <!-- appDropdown = dropdown directive adding or removing the "open" attribute -->
     <div class="btn-group" appDropdown>
-      <button class="btn btn-primary dropdown-toggle" type='button'>
+      <button class="bttn-simple bttn-md bttn-danger dropdown-toggle" type='button'>
         Manage Recipe
         <span class='caret'></span>
       </button>
       <ul class="dropdown-menu">
-        <li><a (click)='onAddToShoppingList()' style='cursor: pointer'>Add To Shopping List</a></li>
+        <li><a (click)='onAddToShoppingList()' style='cursor: pointer'>Add Ingredients To Shopping List</a></li>
         <li (click)='onEditRecipe()' style='cursor: pointer'><a>Edit Recipe</a></li>
         <li (click)='onDeleteRecipe()' style='cursor: pointer'><a>Delete Recipe</a></li>
       </ul>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    {{ recipe.description }}
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
+
+<h3>Ingredients</h3>
+<div class="row detail-body">
+  <div class="col-xs-10">
     <ul class="list-group">
       <li class="list-group-item" *ngFor='let ingredient of recipe.ingredients'>
         {{ ingredient.name }} - {{ ingredient.amount }}
