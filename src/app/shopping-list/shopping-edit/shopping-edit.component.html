@@ -27,7 +27,7 @@
            <!-- Pattern is a regular expression validating that the input is a number greater than 0  -->
         </div>
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-12 btn-container">
             <button class="btn btn-success" type='submit' [disabled]='!form.valid'>{{ editMode ? 'Update' : 'Add' }}</button>
             <button class="btn btn-danger" type='button' *ngIf='editMode' (click)='onDelete()'>Delete</button>
             <button class="btn btn-primary" type='button' (click)='onClear()'>Clear</button>
