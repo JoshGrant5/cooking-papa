@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from '../auth/store/auth.actions';
-import * as RecipeActions from '../recipes/store/recipe.actions';
 
 @Component({
   selector: 'app-header',
@@ -28,14 +27,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(user => {
         this.authenticated = !user ? false : true;
       });
-  }
-
-  onSaveData() {
-    this.store.dispatch(RecipeActions.storeRecipes());
-  }
-
-  onFetchData() {
-    this.store.dispatch(RecipeActions.fetchRecipes());
   }
 
   onLogout() {

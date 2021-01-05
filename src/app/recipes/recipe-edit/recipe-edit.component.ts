@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import * as RecipeActions from '../store/recipe.actions';
 
 import { Store } from '@ngrx/store';
 
@@ -43,11 +44,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    //* this.recipeForm.value is the same as the above code
     if (this.editMode) {
       this.store.dispatch(RecipesActions.updateRecipe({index: this.id, recipe: this.recipeForm.value}));
+      this.store.dispatch(RecipeActions.storeRecipes());
     } else {
       this.store.dispatch(RecipesActions.addRecipe({recipe: this.recipeForm.value}));
+      this.store.dispatch(RecipeActions.storeRecipes());
     }
     this.onCancel();
   }

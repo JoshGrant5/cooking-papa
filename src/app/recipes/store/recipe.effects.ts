@@ -20,7 +20,7 @@ export class RecipeEffects {
   fetchRecipes$ = createEffect(() =>
     this.actions$.pipe(ofType(RecipesActions.fetchRecipes), switchMap(() => {
     return this.http.get<Recipe[]>(
-      'https://cooking-papa-default-rtdb.firebaseio.com/recipes.json'
+      `https://cooking-papa-default-rtdb.firebaseio.com/recipes.json?owner_id=${1}`
     );
   }), map(recipes => {
     return recipes.map(recipe => {
