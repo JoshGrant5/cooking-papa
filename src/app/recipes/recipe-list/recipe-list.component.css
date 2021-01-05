@@ -1,0 +1,8 @@
+.recipe-new {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  width: 50%;
+}

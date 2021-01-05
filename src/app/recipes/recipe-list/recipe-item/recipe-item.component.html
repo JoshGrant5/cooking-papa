@@ -1,6 +1,5 @@
 <a
-class='list-group-item clearfix'
-style='cursor: pointer'
+class='list-group-item clearfix recipe-item'
 [routerLink]='[index]'
 routerLinkActive='active'
 >
@@ -8,8 +7,8 @@ routerLinkActive='active'
     <h4 class='list-group-item-heading'>{{ recipe.name }}</h4>
     <p class="list-group-item-text">{{ recipe.description }}</p>
   </div>
-  <span class="pull-right">
-    <img [src]='recipe.imagePath' alt="{{ recipe.name }}" class='image-responsive' style='max-height: 50px'>
-  </span>
+  <div class="pull-right">
+    <img [src]='recipe.imagePath' alt="{{ recipe.name }}" class='image-responsive'>
+  </div>
 </a>
 <hr>

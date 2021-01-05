@@ -1,0 +1,17 @@
+.recipe-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.pull-left  {
+  padding: 15px;
+}
+
+img {
+  margin-left: 20px;
+  max-height: 150px;
+  width:  150px;
+  object-fit: cover;
+}
