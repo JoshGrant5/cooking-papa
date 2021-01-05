@@ -2,9 +2,18 @@
   margin-bottom: 5vh;
 }
 
-.btn {
+.bttn-simple {
   margin-left: 15px;
-  width: 75px;
+  /* width: 75px; */
+}
+
+.bttn-default {
+  background-color: lightpink;
+  color: rgb(29, 13, 13);
+}
+
+.bttn-warning {
+  background-color: rgb(196, 3, 32);
 }
 
 @media only screen and (max-width: 500px) {

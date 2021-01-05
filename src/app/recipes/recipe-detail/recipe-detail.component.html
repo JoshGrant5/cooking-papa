@@ -5,7 +5,7 @@
 </div>
 <div class="row detail-container">
   <div class="col-xs-12 detail-body">
-    <h1 class='centered'>{{ recipe.name }}</h1>
+    <h1>{{ recipe.name }}</h1>
   </div>
 </div>
 <div class="row no-margin">
@@ -20,7 +20,7 @@
         <span class='caret'></span>
       </button>
       <ul class="dropdown-menu">
-        <li><a (click)='onAddToShoppingList()' style='cursor: pointer'>Add To Shopping List</a></li>
+        <li><a (click)='onAddToShoppingList()' style='cursor: pointer'>Add Ingredients To Shopping List</a></li>
         <li (click)='onEditRecipe()' style='cursor: pointer'><a>Edit Recipe</a></li>
         <li (click)='onDeleteRecipe()' style='cursor: pointer'><a>Delete Recipe</a></li>
       </ul>
@@ -28,6 +28,7 @@
   </div>
 </div>
 
+<h3>Ingredients</h3>
 <div class="row detail-body">
   <div class="col-xs-10">
     <ul class="list-group">
