@@ -5,10 +5,11 @@
 h1 {
   font-family: 'Caveat', sans-serif;
   text-align: center;
+  font-size: 4em;
 }
 
 form {
-  margin-top: 10%;
+  margin-top: 5%;
   border: 1px solid grey;
   border-radius: 25px;
   padding: 25px;
@@ -16,19 +17,25 @@ form {
 }
 
 .form-bttns {
-  margin-top: 50px;
+  margin-top: 5vh;
   display: flex;
   justify-content: space-evenly;
 }
 
 .bttn-simple {
-  width: 40%;
+  /* width: 10vw; */
+}
+
+.bttn-simple.bttn-default {
+  background: white;
+  color: #ff5964;
+  outline: auto;
 }
 
 .icon {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 25px;
 }
 img {
   width: 50%;

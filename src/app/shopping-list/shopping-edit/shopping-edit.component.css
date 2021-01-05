@@ -4,16 +4,18 @@
 
 .bttn-simple {
   margin-left: 15px;
-  /* width: 75px; */
+  width: 85px;
 }
 
 .bttn-default {
-  background-color: lightpink;
-  color: rgb(29, 13, 13);
+  background: white;
+  color: #ff5964;
+  outline: auto;
 }
 
 .bttn-warning {
-  background-color: rgb(196, 3, 32);
+  background-color: lightpink;
+  color: rgb(29, 13, 13);
 }
 
 @media only screen and (max-width: 500px) {

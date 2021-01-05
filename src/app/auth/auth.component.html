@@ -15,8 +15,8 @@
         <input type="password"  id='password' class='form-control' ngModel name='password' required minlength='6'>
       </div>
       <div class='form-bttns'>
-        <button class="bttn-simple bttn-md bttn-primary" type='submit' [disabled]='!authForm.valid'>{{ loginMode ? 'Login' : 'Sign Up' }}</button>
-        <button class="bttn-simple bttn-md bttn-danger" type='button' (click)='onSwitchMode()'>{{ loginMode ? 'Create an Account' : 'Back to Login' }}</button>
+        <button class="bttn-simple bttn-md bttn-danger" type='submit' [disabled]='!authForm.valid'>{{ loginMode ? 'Login' : 'Sign Up' }}</button>
+        <button class="bttn-simple bttn-md bttn-default" type='button' (click)='onSwitchMode()'>{{ loginMode ? 'Create an Account' : 'Back to Login' }}</button>
       </div>
     </form>
     <div class="icon">
