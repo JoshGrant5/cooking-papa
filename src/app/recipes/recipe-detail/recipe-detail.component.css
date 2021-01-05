@@ -1,0 +1,35 @@
+.img-container {
+  display: flex;
+  justify-content: center;
+  border: 1px solid gray;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: 300px;
+}
+
+img {
+  object-fit: cover;
+}
+
+.detail {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.detail-body {
+  display: flex;
+  justify-content: center;
+}
+
+.no-margin  {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
