@@ -3,10 +3,15 @@
   display: flex;
   flex-direction: row;
   padding: 0;
+  max-height: 200px;
 }
 
 .pull-left  {
   padding: 15px;
+  width: 75%;
+}
+.pull-right {
+  width: 25%;
 }
 
 h3 {
@@ -15,8 +20,8 @@ h3 {
 
 img {
   margin-left: 20px;
-  max-height: 150px;
-  width:  150px;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 
