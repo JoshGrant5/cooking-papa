@@ -145,6 +145,8 @@ export class AuthEffects {
     this.authService.clearLogoutTimer();
     localStorage.removeItem('userData');
     this.router.navigate(['/authentication']);
-  })));
+  })),
+    { dispatch: false }
+  );
 
 }
