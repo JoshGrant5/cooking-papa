@@ -20,7 +20,11 @@ export class RecipeEffects {
   fetchRecipes$ = createEffect(() =>
     this.actions$.pipe(ofType(RecipesActions.fetchRecipes), switchMap(() => {
     let token;
-    this.store.select('auth').subscribe(authState => token = authState.user.token);
+    this.store.select('auth').subscribe(authState => {
+      if (authState.user) {
+        token = authState.user.token;
+      }
+    });
     return this.http.get<Recipe[]>(
       `https://cooking-papa-default-rtdb.firebaseio.com/recipes.json?owner_id=${token}`
     );
