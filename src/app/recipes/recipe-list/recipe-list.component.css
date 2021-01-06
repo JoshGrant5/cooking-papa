@@ -4,5 +4,10 @@
 }
 
 button {
-  width: 50%;
+  width: 80%;
+}
+
+h1 {
+  font-family: 'Caveat', sans-serif;
+  text-align: center;
 }
