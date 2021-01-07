@@ -50,8 +50,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const newIngredient = new Ingredient(token, value.name, value.quantity);
     if (this.editMode) {
       this.store.dispatch(ShoppingListActions.updateIngredient({ingredient: newIngredient}));
+      this.store.dispatch(ShoppingListActions.storeIngredients());
     } else {
       this.store.dispatch(ShoppingListActions.addIngredient({ingredient: newIngredient}));
+      this.store.dispatch(ShoppingListActions.storeIngredients());
     }
     // Clear input fields regardless of whether an item was added or edited
     this.editMode = false;
@@ -67,7 +69,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onDelete() {
     this.store.dispatch(ShoppingListActions.deleteIngredient());
     this.store.dispatch(ShoppingListActions.storeIngredients());
-    console.log('after onDelete')
     this.onClear();
   }
 

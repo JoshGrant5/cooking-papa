@@ -40,7 +40,6 @@ export class ShoppingListEffects {
 
   storeIngredients$ = createEffect(() =>
     this.actions$.pipe(ofType(ShoppingListActions.storeIngredients), withLatestFrom(this.store.select('shoppingList')), switchMap(([actionData, shoppingListState]) => {
-    console.log('Inside storeIngredients!', shoppingListState)
     return this.http.put(
       'https://cooking-papa-default-rtdb.firebaseio.com/shopping-list.json',
       shoppingListState.ingredients
