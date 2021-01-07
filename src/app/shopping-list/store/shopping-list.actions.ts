@@ -36,3 +36,7 @@ export const startEdit = createAction(
 export const stopEdit = createAction(
   '[Shopping List] Stop Edit'
 );
+
+export const fetchIngredients = createAction(
+  '[Shopping List] Fetch Ingredients'
+);
