@@ -47,3 +47,7 @@ export const setIngredients = createAction(
 export const fetchIngredients = createAction(
   '[Shopping List] Fetch Ingredients'
 );
+
+export const storeIngredients = createAction(
+  '[Shopping List] Save Ingredients'
+);

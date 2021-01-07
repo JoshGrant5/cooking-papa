@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { switchMap, map } from "rxjs/operators";
+import { switchMap, map, withLatestFrom } from "rxjs/operators";
 import { Ingredient } from "src/app/shared/ingredient.model";
 
 import * as fromApp from '../../store/app.reducer';
@@ -19,12 +19,10 @@ export class ShoppingListEffects {
 
   fetchIngredients$  = createEffect(() =>
     this.actions$.pipe(ofType(ShoppingListActions.fetchIngredients), switchMap(() => {
-      console.log('inside fetch ingredients in effect')
     let token;
     this.store.select('auth').subscribe(authState => {
       if (authState.user) {
         token = authState.user.token;
-        console.log(token)
       }
     });
     return this.http.get<Ingredient[]>(
@@ -40,5 +38,15 @@ export class ShoppingListEffects {
     return ShoppingListActions.setIngredients({ingredients});
   })));
 
+  storeIngredients$ = createEffect(() =>
+    this.actions$.pipe(ofType(ShoppingListActions.storeIngredients), withLatestFrom(this.store.select('shoppingList')), switchMap(([actionData, shoppingListState]) => {
+    console.log('Inside storeIngredients!', shoppingListState)
+    return this.http.put(
+      'https://cooking-papa-default-rtdb.firebaseio.com/shopping-list.json',
+      shoppingListState.ingredients
+    )
+  })),
+    {dispatch: false}
+  );
 
 }
