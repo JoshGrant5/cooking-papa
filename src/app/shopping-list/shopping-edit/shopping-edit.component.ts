@@ -31,7 +31,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         // Whenever we select a new item, populate the form with the right values
         this.slForm.setValue({
           name: this.editedItem.name,
-          amount: this.editedItem.amount
+          quantity: this.editedItem.quantity
         });
       } else {
         this.editMode = false;
@@ -41,7 +41,13 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onAddItem(form: NgForm) {
     const value = form.value;
-    const newIngredient = new Ingredient(value.name, value.amount);
+    let token;
+    this.store.select('auth').subscribe(authState => {
+      if (authState.user) {
+        token = authState.user.token;
+      }
+    });
+    const newIngredient = new Ingredient(token, value.name, value.quantity);
     if (this.editMode) {
       this.store.dispatch(ShoppingListActions.updateIngredient({ingredient: newIngredient}));
     } else {

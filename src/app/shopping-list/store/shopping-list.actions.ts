@@ -37,6 +37,13 @@ export const stopEdit = createAction(
   '[Shopping List] Stop Edit'
 );
 
+export const setIngredients = createAction(
+  '[Recipe] Set Ingredients',
+  props<{
+    ingredients: Ingredient[]
+  }>()
+);
+
 export const fetchIngredients = createAction(
   '[Shopping List] Fetch Ingredients'
 );

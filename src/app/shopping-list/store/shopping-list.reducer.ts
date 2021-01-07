@@ -4,16 +4,11 @@ import * as ShoppingListActions from './shopping-list.actions';
 
 export interface ShoppingListState {
   ingredients: Ingredient[];
-  // editedIngredient: Ingredient;
   editedIndex: number;
 }
 
 const initialState: ShoppingListState = {
-  ingredients: [
-    new Ingredient('Apples', 5),
-    new Ingredient('Tomatoes', 10)
-  ],
-  // editedIngredient: null,
+  ingredients: [],
   editedIndex: -1
 };
 
