@@ -11,6 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import * as fromApp from './store/app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
 import { RecipeEffects } from './recipes/store/recipe.effects';
+import { ShoppingListEffects } from './shopping-list/store/shopping-list.effects';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     AppRoutingModule,
     // use forRoot to specify which reducers we will be using
     StoreModule.forRoot(fromApp.reducers),
-    EffectsModule.forRoot([AuthEffects, RecipeEffects]),
+    EffectsModule.forRoot([AuthEffects, RecipeEffects, ShoppingListEffects]),
     SharedModule,
     CoreModule
   ],

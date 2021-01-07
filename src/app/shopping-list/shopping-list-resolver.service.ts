@@ -21,12 +21,15 @@ export class ShoppingListResolverService implements Resolve<{ingredients: Ingred
   // Resolver loads the data before the page is loaded
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // Select our recipes from the store
+
     return this.store.select('shoppingList').pipe(take(1), map(ingredientsState => {
-      // This will be either an empty array or a filled array
       return ingredientsState.ingredients;
     }),
     switchMap(ingredients => {
       if (ingredients.length === 0) {
+        console.log('inside the resolver')
+        console.log(ingredients)
+      // This will be either an empty array or a filled array
         this.store.dispatch(ShoppingListActions.fetchIngredients());
         // We listen to SET_RECIPES, because if that is called, we know we need to resolve our recipes
         return this.actions$.pipe(ofType(ShoppingListActions.setIngredients), take(1));

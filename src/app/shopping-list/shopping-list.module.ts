@@ -3,6 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
 import { ShoppingEditComponent } from "./shopping-edit/shopping-edit.component";
+import { ShoppingListResolverService } from "./shopping-list-resolver.service";
 import { ShoppingListComponent } from "./shopping-list.component";
 
 @NgModule({
@@ -13,7 +14,7 @@ import { ShoppingListComponent } from "./shopping-list.component";
   imports: [
     FormsModule,
     RouterModule.forChild([
-      { path: '', component: ShoppingListComponent }
+      { path: '', component: ShoppingListComponent, resolve: [ShoppingListResolverService] }
     ]),
     SharedModule
   ]

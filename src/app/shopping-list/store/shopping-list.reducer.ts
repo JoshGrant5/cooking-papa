@@ -67,6 +67,15 @@ const _shoppingListReducer = createReducer(
     (state) => ({
       ...state, editedIndex: -1
     })
+  ),
+
+  on(
+    ShoppingListActions.setIngredients,
+    (state, action) => ({
+      ...state,
+      ingredients: [ ...action.ingredients ],
+      editedIndex: -1
+    })
   )
 
 );

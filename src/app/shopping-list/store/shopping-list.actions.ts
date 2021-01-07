@@ -38,7 +38,7 @@ export const stopEdit = createAction(
 );
 
 export const setIngredients = createAction(
-  '[Recipe] Set Ingredients',
+  '[Shopping List] Set Ingredients',
   props<{
     ingredients: Ingredient[]
   }>()
