@@ -25,6 +25,8 @@ export class RecipeDetailComponent implements OnInit {
     private store: Store<fromApp.AppState>
   ) {}
 
+  user_id: string;
+
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
@@ -38,10 +40,20 @@ export class RecipeDetailComponent implements OnInit {
         });
       }
     );
+
+    this.store.select('auth').subscribe(authState => {
+      if (authState.user) {
+        this.user_id = authState.user.id;
+      }
+    });
   }
 
   onAddToShoppingList() {
-    this.store.dispatch(ShoppingListActions.addIngredients({ingredients: this.recipe.ingredients}));
+    const editedIngredients = this.recipe.ingredients.map(ingredient => {
+      return {name: ingredient.name, quantity: ingredient.quantity, owner_id: this.user_id}
+    });
+    this.store.dispatch(ShoppingListActions.addIngredients({ingredients: editedIngredients}));
+    this.store.dispatch(ShoppingListActions.storeIngredients());
   }
 
   onEditRecipe() {

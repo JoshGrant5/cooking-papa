@@ -41,13 +41,13 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onAddItem(form: NgForm) {
     const value = form.value;
-    let token;
+    let user_id;
     this.store.select('auth').subscribe(authState => {
       if (authState.user) {
-        token = authState.user.id;
+        user_id = authState.user.id;
       }
     });
-    const newIngredient = new Ingredient(token, value.name, value.quantity);
+    const newIngredient = new Ingredient(user_id, value.name, value.quantity);
     if (this.editMode) {
       this.store.dispatch(ShoppingListActions.updateIngredient({ingredient: newIngredient}));
       this.store.dispatch(ShoppingListActions.storeIngredients());
