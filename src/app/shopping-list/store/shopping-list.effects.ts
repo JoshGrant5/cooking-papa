@@ -17,16 +17,17 @@ export class ShoppingListEffects {
     private store: Store<fromApp.AppState>
   ) {};
 
+  owner_id: string;
+
   fetchIngredients$  = createEffect(() =>
     this.actions$.pipe(ofType(ShoppingListActions.fetchIngredients), switchMap(() => {
-    let token;
     this.store.select('auth').subscribe(authState => {
       if (authState.user) {
-        token = authState.user.id;
+        this.owner_id = authState.user.id;
       }
     });
     return this.http.get<Ingredient[]>(
-      `https://cooking-papa-default-rtdb.firebaseio.com/shopping-list.json?owner_id=${token}`
+      'https://cooking-papa-default-rtdb.firebaseio.com/shopping-list.json'
     );
   }), map(ingredients => {
     return ingredients.map(ingredient => {
@@ -35,7 +36,10 @@ export class ShoppingListEffects {
       };
     });
   }), map(ingredients => {
-    return ShoppingListActions.setIngredients({ingredients});
+    const filteredIngredients = ingredients.filter(ingredient => {
+      return ingredient.owner_id === this.owner_id;
+    });
+    return ShoppingListActions.setIngredients({ingredients: filteredIngredients});
   })));
 
   storeIngredients$ = createEffect(() =>

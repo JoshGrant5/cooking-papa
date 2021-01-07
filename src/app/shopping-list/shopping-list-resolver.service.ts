@@ -24,12 +24,8 @@ export class ShoppingListResolverService implements Resolve<{ingredients: Ingred
       return ingredientsState.ingredients;
     }),
     switchMap(ingredients => {
-      if (ingredients.length === 0) {
-        this.store.dispatch(ShoppingListActions.fetchIngredients());
-        return this.actions$.pipe(ofType(ShoppingListActions.setIngredients), take(1));
-      } else {
-        return of({ingredients});
-      }
+      this.store.dispatch(ShoppingListActions.fetchIngredients());
+      return this.actions$.pipe(ofType(ShoppingListActions.setIngredients), take(1));
     }));
   }
 }
