@@ -19,7 +19,6 @@ export class RecipeEffects {
 
   fetchRecipes$ = createEffect(() =>
     this.actions$.pipe(ofType(RecipesActions.fetchRecipes), switchMap(() => {
-      console.log('inside fetch recipes')
     let token;
     this.store.select('auth').subscribe(authState => {
       if (authState.user) {

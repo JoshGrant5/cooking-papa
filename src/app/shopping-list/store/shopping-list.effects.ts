@@ -18,7 +18,6 @@ export class ShoppingListEffects {
   ) {};
 
   fetchIngredients$  = createEffect(() =>
-
     this.actions$.pipe(ofType(ShoppingListActions.fetchIngredients), switchMap(() => {
       console.log('inside fetch ingredients in effect')
     let token;
@@ -28,13 +27,10 @@ export class ShoppingListEffects {
         console.log(token)
       }
     });
-
-
     return this.http.get<Ingredient[]>(
       `https://cooking-papa-default-rtdb.firebaseio.com/shopping-list.json?owner_id=${token}`
     );
   }), map(ingredients => {
-    console.log('Ingredients in mapping of http request', ingredients)
     return ingredients.map(ingredient => {
       return {
         ...ingredient

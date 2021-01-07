@@ -58,7 +58,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
         'name': new FormControl(null, Validators.required),
-        'amount': new FormControl(null, [
+        'quantity': new FormControl(null, [
           Validators.required,
           Validators.pattern(/^[1-9]+[0-9]*$/) // Validate that we are accepting a positive number
         ])
@@ -102,7 +102,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             recipeIngredients.push(
               new FormGroup({
                 'name': new FormControl(ingredient.name, Validators.required),
-                'amount': new FormControl(ingredient.quantity, [
+                'quantitysm': new FormControl(ingredient.quantity, [
                   Validators.required,
                   Validators.pattern(/^[1-9]+[0-9]*$/)
                 ])
