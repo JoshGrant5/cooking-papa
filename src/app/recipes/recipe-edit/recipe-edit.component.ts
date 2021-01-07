@@ -19,6 +19,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   id: number;
   editMode = false;
   recipeForm: FormGroup;
+  owner_id: string;
 
   private storeSub: Subscription;
 
@@ -86,7 +87,14 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     let recipeName = '';
     let recipeImagePath = '';
     let recipeDescription = '';
+    let recipeOwnerId = this.owner_id;
     let recipeIngredients = new FormArray([]);
+
+    this.store.select('auth').subscribe(authState => {
+      if (authState.user) {
+        this.owner_id = authState.user.token;
+      }
+    });
 
     if (this.editMode) {
       this.storeSub = this.store.select('recipes').pipe(map(recipeState => {
@@ -118,7 +126,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       'name': new FormControl(recipeName, Validators.required),
       'imagePath': new FormControl(recipeImagePath, Validators.required),
       'description': new FormControl(recipeDescription, Validators.required),
+      'owner_id': new FormControl(recipeOwnerId),
       'ingredients': recipeIngredients
+    });
+    this.recipeForm.patchValue({
+      owner_id: this.owner_id
     });
   }
 
