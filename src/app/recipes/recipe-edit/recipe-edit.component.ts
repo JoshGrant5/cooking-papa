@@ -92,7 +92,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     this.store.select('auth').subscribe(authState => {
       if (authState.user) {
-        this.owner_id = authState.user.token;
+        this.owner_id = authState.user.id;
       }
     });
 

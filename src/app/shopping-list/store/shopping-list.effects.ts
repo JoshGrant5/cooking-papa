@@ -22,7 +22,7 @@ export class ShoppingListEffects {
     let token;
     this.store.select('auth').subscribe(authState => {
       if (authState.user) {
-        token = authState.user.token;
+        token = authState.user.id;
       }
     });
     return this.http.get<Ingredient[]>(

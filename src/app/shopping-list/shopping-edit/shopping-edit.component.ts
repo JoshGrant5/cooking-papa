@@ -44,7 +44,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     let token;
     this.store.select('auth').subscribe(authState => {
       if (authState.user) {
-        token = authState.user.token;
+        token = authState.user.id;
       }
     });
     const newIngredient = new Ingredient(token, value.name, value.quantity);
