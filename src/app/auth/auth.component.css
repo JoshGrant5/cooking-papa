@@ -12,7 +12,7 @@ h1 {
 form {
   margin-top: 5%;
   border: 1px solid grey;
-  border-radius: 25px;
+  border-radius: 10px;
   padding: 25px;
   box-shadow: 2px 2px 2px 2px lightgray;
 }

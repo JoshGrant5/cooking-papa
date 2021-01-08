@@ -13,13 +13,15 @@
   top: 30vh;
   left: 20vw;
   width: 60vw;
-  padding: 1em;
-  border-radius: 15px;
+  padding: 0.5em;
+  border-radius: 10px;
   z-index: 2;
   background: white;
   box-shadow: 0 2px 8px black;
 }
 
-.alert-box-action {
-  text-align: right;
+h1 {
+  font-family: 'Caveat', cursive;
+  margin-bottom: 20px;
+  text-align: center;
 }
