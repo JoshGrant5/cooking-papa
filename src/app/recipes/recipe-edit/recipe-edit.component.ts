@@ -65,6 +65,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         ])
       })
     );
+    this.store.dispatch(RecipeActions.storeRecipes());
   }
 
   onDeleteIngredient(index: number) {

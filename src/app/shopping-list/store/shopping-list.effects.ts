@@ -44,9 +44,25 @@ export class ShoppingListEffects {
 
   storeIngredients$ = createEffect(() =>
     this.actions$.pipe(ofType(ShoppingListActions.storeIngredients), withLatestFrom(this.store.select('shoppingList')), switchMap(([actionData, shoppingListState]) => {
+    // If ingredient already in shopping list, add to quantity instead of creating a new list item
+    const updatedIngredients = [];
+    const ingredientNames = [];
+    const ingredients = [...shoppingListState.ingredients];
+    for (let ingredient of ingredients) {
+      if (!ingredientNames.includes(ingredient.name)) {
+        updatedIngredients.push({...ingredient});
+        ingredientNames.push(ingredient.name);
+      } else {
+        for (let i = 0; i < updatedIngredients.length; i++) {
+          if (updatedIngredients[i].name === ingredient.name) {
+            updatedIngredients[i].quantity += ingredient.quantity;
+          }
+        }
+      }
+    }
     return this.http.put(
       'https://cooking-papa-default-rtdb.firebaseio.com/shopping-list.json',
-      shoppingListState.ingredients
+      updatedIngredients
     )
   })),
     {dispatch: false}
