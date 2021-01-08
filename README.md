@@ -1,27 +1,31 @@
-# RecipeApp
+# Cooking Papa
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+A simple recipe-storing application built as the final project for Udemy's Complete Guide to Angular 2020 course: https://www.udemy.com/course/the-complete-guide-to-angular-2/.
 
-## Development server
+The goal of this project was to familiarize myself with the Angular framework, TypeScript, and the NgRx and RxJS libraries. As such, this project is minimally styled with Bootstrap and uses a Firebase Realtime Database. Once logged in, users can add and update recipes of thiers, and manage their own shopping list.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This app is hosted on Firebase. You may view the project at https://cooking-papa.web.app/authentication.
 
-## Code scaffolding
+*This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.*
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tech Stack
+- TypeScript
+- Angular
+- NgRx
+- RxJS
+- Bootstrap
+- Firebase Realtime Database
 
-## Build
+## Walkthrough
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+#### Select a recipe
 
-## Running unit tests
+!["Recipes Homepage"]()
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### Add ingredients to shopping list and edit the recipe
 
-## Running end-to-end tests
+!["View Recipe Details"]()
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+#### View and update shopping list
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+!["View Shopping List"]()
