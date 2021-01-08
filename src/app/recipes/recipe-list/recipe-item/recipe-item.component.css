@@ -4,6 +4,7 @@
   flex-direction: row;
   padding: 0;
   max-height: 200px;
+  min-height: 150px;
 }
 
 .pull-left  {
