@@ -60,6 +60,7 @@ export class ShoppingListEffects {
         }
       }
     }
+    this.store.dispatch(ShoppingListActions.setIngredients({ingredients: updatedIngredients}));
     return this.http.put(
       'https://cooking-papa-default-rtdb.firebaseio.com/shopping-list.json',
       updatedIngredients

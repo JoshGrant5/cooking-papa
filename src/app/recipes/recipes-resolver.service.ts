@@ -26,8 +26,14 @@ export class RecipesResolverService implements Resolve<{recipes: Recipe[]}> {
       return recipesState.recipes;
     }),
     switchMap(recipes => {
-      this.store.dispatch(RecipesActions.fetchRecipes());
-      return this.actions$.pipe(ofType(RecipesActions.setRecipes), take(1));
+      if (recipes.length === 0) {
+        this.store.dispatch(RecipesActions.fetchRecipes());
+        // We listen to SET_RECIPES, because if that is called, we know we need to resolve our recipes
+        return this.actions$.pipe(ofType(RecipesActions.setRecipes), take(1));
+      } else {
+        // Our recipes length is greater than 0, so we return a new observable of just our current recipes
+        return of({recipes});
+      }
     }));
   }
 }

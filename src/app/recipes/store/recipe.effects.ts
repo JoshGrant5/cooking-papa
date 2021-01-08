@@ -47,11 +47,32 @@ export class RecipeEffects {
   // ofType gives us back actionData (not intersted in this) and the data we receive from withLatestFrom => use array destructing to grab these
   storeRecipes$ = createEffect(() =>
     this.actions$.pipe(ofType(RecipesActions.storeRecipes), withLatestFrom(this.store.select('recipes')), switchMap(([actionData, recipeState]) => {
-    return this.http.put(
-      'https://cooking-papa-default-rtdb.firebaseio.com/recipes.json',
-      recipeState.recipes
-    )
-  })),
+      const updatedRecipes = [];
+      recipeState.recipes.forEach(recipe => {
+        const updatedIngredients = [];
+        const ingredientNames = [];
+        const ingredients = [...recipe.ingredients];
+        for (let ingredient of ingredients) {
+          if (!ingredientNames.includes(ingredient.name)) {
+            updatedIngredients.push({...ingredient});
+            ingredientNames.push(ingredient.name);
+          } else {
+            for (let i = 0; i < updatedIngredients.length; i++) {
+              if (updatedIngredients[i].name === ingredient.name) {
+                updatedIngredients[i].quantity += ingredient.quantity;
+              }
+            }
+          }
+        }
+        updatedRecipes.push({...recipe, ingredients: updatedIngredients});
+      });
+      console.log(updatedRecipes)
+      this.store.dispatch(RecipesActions.setRecipes({recipes: updatedRecipes}));
+      return this.http.put(
+        'https://cooking-papa-default-rtdb.firebaseio.com/recipes.json',
+        updatedRecipes
+      )
+    })),
     {dispatch: false}
   );
 
