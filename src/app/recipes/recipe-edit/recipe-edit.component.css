@@ -1,6 +1,7 @@
 h1 {
   font-family: 'Caveat', sans-serif;
   text-align: center;
+  margin-top: 0;
 }
 
 form {
@@ -46,6 +47,12 @@ input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
 
 .delete {
   margin-top: 25px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.instructions {
+  margin-top: 15px;
 }
 
 @media only screen and (max-width: 1000px) {

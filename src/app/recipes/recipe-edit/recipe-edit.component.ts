@@ -20,6 +20,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   editMode = false;
   recipeForm: FormGroup;
   owner_id: string;
+  recipeMessage: string;
 
   private storeSub: Subscription;
 
@@ -39,6 +40,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         // "+" converts into a number
         this.id = +params['id'];
         this.editMode = params['id'] != null;
+        this.recipeMessage = this.editMode ? 'Edit Recipe' : 'My New Recipe';
         this.initForm();
       }
     );
@@ -89,6 +91,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     let recipeDescription = '';
     let recipeOwnerId = this.owner_id;
     let recipeIngredients = new FormArray([]);
+    let recipeInstructions = '';
 
     this.store.select('auth').subscribe(authState => {
       if (authState.user) {
@@ -105,6 +108,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         recipeName = recipe.name;
         recipeImagePath = recipe.imagePath;
         recipeDescription = recipe.description;
+        recipeInstructions = recipe.instructions;
         if (recipe['ingredients']) {
           for (let ingredient of recipe.ingredients) {
             recipeIngredients.push(
@@ -127,7 +131,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       'imagePath': new FormControl(recipeImagePath, Validators.required),
       'description': new FormControl(recipeDescription, Validators.required),
       'owner_id': new FormControl(recipeOwnerId),
-      'ingredients': recipeIngredients
+      'ingredients': recipeIngredients,
+      'instructions': new FormControl(recipeInstructions, Validators.required)
     });
     this.recipeForm.patchValue({
       owner_id: this.owner_id

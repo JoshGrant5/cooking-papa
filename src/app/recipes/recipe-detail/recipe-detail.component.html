@@ -27,7 +27,6 @@
     </div>
   </div>
 </div>
-
 <h3>Ingredients</h3>
 <div class="row detail-body">
   <div class="col-xs-10">
@@ -36,5 +35,11 @@
         {{ ingredient.name }} - {{ ingredient.quantity }}
       </li>
     </ul>
+  </div>
+</div>
+<h3>Instructions</h3>
+<div class="row detail-container instructions">
+  <div class="col-xs-10 detail-body">
+    <p style='white-space: pre-wrap;'>{{ recipe.instructions }}</p>
   </div>
 </div>

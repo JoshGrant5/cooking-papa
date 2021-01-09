@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
-    <h1>My New Recipe</h1>
+    <h1>{{ recipeMessage }}</h1>
     <!-- Tell Angular that our overall form should be managed by us, and not by Angular -->
     <form [formGroup]='recipeForm' (ngSubmit)='onSubmit()'>
       <div class="row">
@@ -17,11 +17,6 @@
             <label for="imagePath">Image URL</label>
             <input type="text" id='imagePath' formControlName='imagePath' class='form-control'>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <img src="imagePath.value" class='img-responsive'>
         </div>
       </div>
       <div class="row">
@@ -54,6 +49,14 @@
           </div>
         </div>
       </div>
+      <div class="row instructions">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="description">Instructions</label>
+            <textarea type="text" id='instructions' formControlName='instructions' class='form-control' rows='6'></textarea>
+          </div>
+        </div>
+      </div>
       <hr>
       <div class="row">
         <div class="col-xs-12 bttn-container">
@@ -70,3 +73,15 @@
     </form>
   </div>
 </div>
+
+<!-- 1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur provident officiis est veniam iure dicta vel, accusamus, quam totam, itaque similique rerum natus quasi a? Quaerat ab modi libero.
+
+2. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque quae, a explicabo sapiente obcaecati libero doloremque omnis nesciunt quos fuga? Possimus officiis sunt illo quis maxime dolore ratione neque sit.
+
+3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo facere possimus molestias. Adipisci quisquam quam ipsam, repellat eum placeat maiores officia magni eaque doloribus ex laboriosam atque libero quia repudiandae.
+
+4. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem velit praesentium optio, itaque incidunt iure ad reprehenderit debitis et, porro vitae veritatis quae fugiat voluptas reiciendis! Facilis est totam sint.
+
+5. Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quae explicabo quas, tenetur dolore fugiat autem sunt, natus rem sapiente ad dicta soluta iure doloribus officiis repudiandae tempora. Enim, sunt!
+
+6. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur tempore itaque nihil repellendus voluptatem maiores, error consequuntur eum expedita. Ea, ipsum expedita. Natus aliquam hic fuga laboriosam sint vitae quis. -->
