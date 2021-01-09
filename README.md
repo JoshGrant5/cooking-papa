@@ -20,12 +20,12 @@ This app is hosted on Firebase. You may view the project at https://cooking-papa
 
 #### Select a recipe
 
-!["Recipes Homepage"]()
+!["Recipes Homepage"](https://github.com/JoshGrant5/cooking-papa/blob/main/src/assets/gifs/2021-01-08%2019.13.22.gif)
 
 #### Add ingredients to shopping list and edit the recipe
 
-!["View Recipe Details"]()
+!["View Recipe Details"](https://github.com/JoshGrant5/cooking-papa/blob/main/src/assets/gifs/2021-01-08%2019.17.45.gif)
 
 #### View and update shopping list
 
-!["View Shopping List"]()
+!["View Shopping List"](https://github.com/JoshGrant5/cooking-papa/blob/main/src/assets/gifs/2021-01-08%2019.18.14.gif)
