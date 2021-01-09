@@ -23,6 +23,10 @@ form {
   justify-content: space-evenly;
 }
 
+.bttn-simple {
+  width: 40%
+}
+
 .bttn-simple.bttn-default {
   background: white;
   color: #ff5964;
@@ -55,6 +59,7 @@ img {
 
   .bttn-simple {
     font-size: 1em;
+    width: 100%;
   }
 
   h1 {
