@@ -1,6 +1,6 @@
 # Cooking Papa
 
-A simple recipe-storing application built as the final project for Udemy's Complete Guide to Angular 2020 course: https://www.udemy.com/course/the-complete-guide-to-angular-2/.
+A simple recipe-storing application built as the final project for Udemy's Angular - The Complete Guide (2021 Edition) course: https://www.udemy.com/course/the-complete-guide-to-angular-2/.
 
 The goal of this project was to familiarize myself with the Angular framework, TypeScript, and the NgRx and RxJS libraries. As such, this project is minimally styled with Bootstrap and uses a Firebase Realtime Database. Once logged in, users can add and update recipes of thiers, and manage their own shopping list.
 
